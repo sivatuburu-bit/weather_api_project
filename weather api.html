@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Report</title>
+
+    <style>
+        body {
+            background-color: rgb(247, 246, 248);
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .box {
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgb(127, 197, 127);
+            border-radius: 10px;
+        }
+
+        input {
+            padding: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+        }
+
+        #result {
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="box">
+
+        <h1>Weather Report</h1>
+
+        <input type="text" id="city" placeholder="Enter city name">
+
+        <br><br>
+
+        <button onclick="WeatherReport()">Result</button>
+
+        <div id="result"></div>
+
+    </div>
+
+    <script>
+
+       function WeatherReport() {
+
+    let city = document.getElementById("city").value;
+
+    let API_KEY = "1360c924a28996ec23c16180f21583af";
+
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`)
+
+            .then(response => response.json())
+
+            .then(data => {
+
+             console.log("City:", data.name);
+             console.log("Temperature:", data.main.temp);
+             console.log("Weather:", data.weather[0].description);
+
+            document.getElementById("result").innerHTML =
+             `
+             <h2>${data.name}</h2>
+            <p>Temperature: ${data.main.temp} °C</p>
+            <p>Weather: ${data.weather[0].description}</p>
+             `;
+
+            })
+
+        .catch(error => console.log("Error:", error));
+
+    }
+    
+
+    </script>
+
+</body>
+</html>
